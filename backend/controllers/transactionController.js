@@ -1,14 +1,10 @@
-const Transaction = require('../models/Transaction');
-const { validationResult } = require('express-validator');
+import Transaction from '../models/Transaction';
+import { validationResult } from 'express-validator';
 
-// @desc    Get all transactions
-// @route   GET /api/transactions
-// @access  Public
 const getTransactions = async (req, res) => {
   try {
     const { category, startDate, endDate, sortBy = 'date', sortOrder = 'desc' } = req.query;
     
-    // Build filter object
     const filter = {};
     
     if (category && category !== 'all') {
@@ -21,15 +17,13 @@ const getTransactions = async (req, res) => {
       if (endDate) filter.date.$lte = new Date(endDate);
     }
     
-    // Build sort object
     const sort = {};
     sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
     
     const transactions = await Transaction.find(filter)
       .sort(sort)
-      .limit(100); // Limit to prevent large responses
+      .limit(100);
     
-    // Calculate summary statistics
     const totalIncome = transactions
       .filter(t => t.amount > 0)
       .reduce((sum, t) => sum + t.amount, 0);
@@ -62,9 +56,6 @@ const getTransactions = async (req, res) => {
   }
 };
 
-// @desc    Get single transaction
-// @route   GET /api/transactions/:id
-// @access  Public
 const getTransaction = async (req, res) => {
   try {
     const transaction = await Transaction.findById(req.params.id);
@@ -98,9 +89,6 @@ const getTransaction = async (req, res) => {
   }
 };
 
-// @desc    Create new transaction
-// @route   POST /api/transactions
-// @access  Public
 const createTransaction = async (req, res) => {
   try {
     // Check for validation errors
@@ -154,12 +142,8 @@ const createTransaction = async (req, res) => {
   }
 };
 
-// @desc    Update transaction
-// @route   PUT /api/transactions/:id
-// @access  Public
 const updateTransaction = async (req, res) => {
   try {
-    // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -179,7 +163,6 @@ const updateTransaction = async (req, res) => {
       description
     };
     
-    // Remove undefined fields
     Object.keys(updateData).forEach(key => 
       updateData[key] === undefined && delete updateData[key]
     );
@@ -233,9 +216,6 @@ const updateTransaction = async (req, res) => {
   }
 };
 
-// @desc    Delete transaction
-// @route   DELETE /api/transactions/:id
-// @access  Public
 const deleteTransaction = async (req, res) => {
   try {
     const transaction = await Transaction.findByIdAndDelete(req.params.id);
@@ -270,9 +250,6 @@ const deleteTransaction = async (req, res) => {
   }
 };
 
-// @desc    Get transaction statistics
-// @route   GET /api/transactions/stats/summary
-// @access  Public
 const getTransactionStats = async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
@@ -286,7 +263,7 @@ const getTransactionStats = async (req, res) => {
     
     const transactions = await Transaction.find(filter);
     
-    // Calculate statistics by category
+    
     const categoryStats = {};
     let totalIncome = 0;
     let totalExpenses = 0;
