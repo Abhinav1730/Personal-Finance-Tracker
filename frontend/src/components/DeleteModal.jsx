@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from '../services/transactionService'
+import { formatCurrency, formatDate } from '../utils/formatters'
 import { AlertTriangle, X } from 'lucide-react'
 
 const DeleteModal = ({ isOpen, onClose, onConfirm, transaction }) => {

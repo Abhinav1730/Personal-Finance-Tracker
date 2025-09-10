@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate, getCategoryLabel, getCategoryColor } from '../services/transactionService'
+import { formatCurrency, formatDate, getCategoryLabel, getCategoryColor } from '../utils/formatters'
 import { Edit, Trash2, Calendar, Tag } from 'lucide-react'
 
 const TransactionCard = ({ transaction, onEdit, onDelete }) => {

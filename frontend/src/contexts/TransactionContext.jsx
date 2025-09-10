@@ -1,9 +1,8 @@
-import { createContext, useContext, useReducer, useEffect } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 import { transactionService } from '../services/transactionService'
 
 const TransactionContext = createContext()
 
-// Action types
 const ACTIONS = {
   SET_LOADING: 'SET_LOADING',
   SET_TRANSACTIONS: 'SET_TRANSACTIONS',
@@ -72,17 +71,19 @@ function transactionReducer(state, action) {
         }
       }
     
-    case ACTIONS.UPDATE_TRANSACTION:
+    case ACTIONS.UPDATE_TRANSACTION: {
       const updatedTransactions = state.transactions.map(transaction =>
         transaction._id === action.payload._id ? action.payload : transaction
       )
       return { ...state, transactions: updatedTransactions }
+    }
     
-    case ACTIONS.DELETE_TRANSACTION:
+    case ACTIONS.DELETE_TRANSACTION: {
       const filteredTransactions = state.transactions.filter(
         transaction => transaction._id !== action.payload
       )
       return { ...state, transactions: filteredTransactions }
+    }
     
     case ACTIONS.SET_ERROR:
       return { ...state, error: action.payload, loading: false }
@@ -101,7 +102,6 @@ function transactionReducer(state, action) {
   }
 }
 
-// Provider component
 export function TransactionProvider({ children }) {
   const [state, dispatch] = useReducer(transactionReducer, initialState)
 
@@ -110,7 +110,6 @@ export function TransactionProvider({ children }) {
     loadTransactions()
   }, [state.filters])
 
-  // Load transactions with current filters
   const loadTransactions = async () => {
     try {
       dispatch({ type: ACTIONS.SET_LOADING, payload: true })
@@ -237,11 +236,4 @@ export function TransactionProvider({ children }) {
   )
 }
 
-// Custom hook to use the transaction context
-export function useTransactions() {
-  const context = useContext(TransactionContext)
-  if (!context) {
-    throw new Error('useTransactions must be used within a TransactionProvider')
-  }
-  return context
-}
+export { TransactionContext }

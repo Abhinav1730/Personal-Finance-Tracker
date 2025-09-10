@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useTransactions } from '../contexts/TransactionContext'
-import { formatCurrency, getCategoryLabel } from '../services/transactionService'
+import { useTransactions } from '../hooks/useTransactions'
+import { formatCurrency, getCategoryLabel } from '../utils/formatters'
 import { 
   BarChart, 
   Bar, 

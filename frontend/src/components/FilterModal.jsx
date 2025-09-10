@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { X, Calendar, Tag, ArrowUpDown } from 'lucide-react'
-import { CATEGORIES } from '../services/transactionService'
+import { CATEGORIES } from '../utils/formatters'
 
 const FilterModal = ({ isOpen, onClose, filters, onFiltersChange }) => {
   const [localFilters, setLocalFilters] = useState(filters)
