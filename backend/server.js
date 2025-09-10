@@ -1,20 +1,16 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const path = require('path');
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import path from 'path';
 
-// Import routes
-const transactionRoutes = require('./routes/transactions');
+const transactionRoutes = import('./routes/transactions');
 
-// Initialize Express app
 const app = express();
 
-// Environment variables (with fallbacks for development)
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/personal-finance-tracker';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-// Middleware
 app.use(cors({
   origin: NODE_ENV === 'production' 
     ? ['https://your-frontend-domain.com'] // Replace with your frontend domain
@@ -25,16 +21,13 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request logging middleware
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
 
-// Routes
 app.use('/api/transactions', transactionRoutes);
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({
     success: true,
@@ -44,7 +37,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Root endpoint
 app.get('/', (req, res) => {
   res.json({
     success: true,
@@ -58,7 +50,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
@@ -67,11 +58,9 @@ app.use('*', (req, res) => {
   });
 });
 
-// Global error handler
 app.use((err, req, res, next) => {
   console.error('Global error handler:', err);
   
-  // Mongoose validation error
   if (err.name === 'ValidationError') {
     const errors = Object.values(err.errors).map(error => ({
       field: error.path,
@@ -85,7 +74,6 @@ app.use((err, req, res, next) => {
     });
   }
   
-  // Mongoose duplicate key error
   if (err.code === 11000) {
     return res.status(400).json({
       success: false,
@@ -94,7 +82,6 @@ app.use((err, req, res, next) => {
     });
   }
   
-  // Mongoose cast error
   if (err.name === 'CastError') {
     return res.status(400).json({
       success: false,
@@ -102,7 +89,6 @@ app.use((err, req, res, next) => {
     });
   }
   
-  // Default error
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Internal server error',
@@ -110,7 +96,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Connect to MongoDB
+// Connection to the MongoDB
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(MONGODB_URI, {
@@ -126,7 +112,6 @@ const connectDB = async () => {
   }
 };
 
-// Start server
 const startServer = async () => {
   try {
     await connectDB();
@@ -155,19 +140,16 @@ const startServer = async () => {
   }
 };
 
-// Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
   console.error('Unhandled Promise Rejection:', err);
   process.exit(1);
 });
 
-// Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
   process.exit(1);
 });
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM received. Shutting down gracefully...');
   mongoose.connection.close(() => {
@@ -184,5 +166,4 @@ process.on('SIGINT', () => {
   });
 });
 
-// Start the server
 startServer();
