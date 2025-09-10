@@ -44,6 +44,12 @@ export default {
           900: '#7f1d1d',
         }
       },
+      fontFamily: {
+        'inter': ['Inter', 'system-ui', 'sans-serif'],
+      },
+      backdropBlur: {
+        xs: '2px',
+      },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',

@@ -139,7 +139,7 @@ const AddTransaction = () => {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span className="text-gray-500 sm:text-sm">$</span>
+                <span className="text-gray-500 sm:text-sm font-semibold">₹</span>
               </div>
               <input
                 type="number"
@@ -149,7 +149,7 @@ const AddTransaction = () => {
                 placeholder="0.00"
                 step="0.01"
                 min="0.01"
-                className={`input pl-8 ${validationErrors.amount ? 'input-error' : ''}`}
+                className={`input pl-10 ${validationErrors.amount ? 'input-error' : ''}`}
               />
             </div>
             <p className="mt-1 text-xs text-gray-500">

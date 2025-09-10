@@ -8,27 +8,27 @@ const TransactionCard = ({ transaction, onEdit, onDelete }) => {
   const amountIcon = isIncome ? '+' : '-'
 
   return (
-    <div className="card hover:shadow-md transition-shadow duration-200">
+    <div className="card group hover:scale-[1.02] transition-all duration-300">
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">
+              <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
                 {transaction.title}
               </h3>
               {transaction.description && (
-                <p className="text-gray-600 text-sm mb-2">
+                <p className="text-gray-600 text-sm mb-3 leading-relaxed">
                   {transaction.description}
                 </p>
               )}
               
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <div className="flex items-center space-x-1">
-                  <Calendar className="h-4 w-4" />
-                  <span>{formatDate(transaction.date)}</span>
+              <div className="flex items-center space-x-6 text-sm text-gray-500">
+                <div className="flex items-center space-x-2">
+                  <Calendar className="h-4 w-4 text-gray-400" />
+                  <span className="font-medium">{formatDate(transaction.date)}</span>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Tag className="h-4 w-4" />
+                <div className="flex items-center space-x-2">
+                  <Tag className="h-4 w-4 text-gray-400" />
                   <span className={`badge badge-category`}>
                     {getCategoryLabel(transaction.category)}
                   </span>
@@ -36,28 +36,28 @@ const TransactionCard = ({ transaction, onEdit, onDelete }) => {
               </div>
             </div>
             
-            <div className={`px-4 py-2 rounded-lg ${amountBg} ml-4`}>
-              <div className={`text-lg font-bold ${amountColor}`}>
+            <div className={`px-6 py-4 rounded-2xl ${amountBg} ml-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
+              <div className={`text-2xl font-bold ${amountColor}`}>
                 {amountIcon}{formatCurrency(Math.abs(transaction.amount))}
               </div>
             </div>
           </div>
         </div>
         
-        <div className="flex items-center space-x-2 ml-4">
+        <div className="flex items-center space-x-3 ml-6">
           <button
             onClick={onEdit}
-            className="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors duration-200"
+            className="p-3 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 hover:scale-110"
             title="Edit transaction"
           >
-            <Edit className="h-4 w-4" />
+            <Edit className="h-5 w-5" />
           </button>
           <button
             onClick={onDelete}
-            className="p-2 text-gray-400 hover:text-danger-600 hover:bg-danger-50 rounded-lg transition-colors duration-200"
+            className="p-3 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-300 hover:scale-110"
             title="Delete transaction"
           >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-5 w-5" />
           </button>
         </div>
       </div>
