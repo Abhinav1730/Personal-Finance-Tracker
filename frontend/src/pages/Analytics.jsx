@@ -28,7 +28,7 @@ import ErrorMessage from '../components/ErrorMessage'
 import FilterModal from '../components/FilterModal'
 
 const Analytics = () => {
-  const { getStats, loading, error, clearError } = useTransactions()
+  const { getStats, error, clearError } = useTransactions()
   const [stats, setStats] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [showFilterModal, setShowFilterModal] = useState(false)
@@ -74,7 +74,7 @@ const Analytics = () => {
     if (!stats?.categoryStats) return []
     
     return Object.entries(stats.categoryStats)
-      .filter(([_, data]) => data.expenses > 0)
+      .filter(([, data]) => data.expenses > 0)
       .map(([category, data]) => ({
         name: getCategoryLabel(category),
         value: data.expenses
@@ -84,8 +84,6 @@ const Analytics = () => {
   }
 
   const prepareMonthlyData = () => {
-    // This would typically come from the backend with monthly aggregation
-    // For now, we'll create sample data
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
     return months.map(month => ({
       month,

@@ -1,4 +1,4 @@
-import Transaction from '../models/Transaction';
+import Transaction from '../models/Transaction.js';
 import { validationResult } from 'express-validator';
 
 const getTransactions = async (req, res) => {

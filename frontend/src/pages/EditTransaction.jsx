@@ -9,7 +9,7 @@ import ErrorMessage from '../components/ErrorMessage'
 const EditTransaction = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { getTransaction, updateTransaction, loading, error, clearError } = useTransactions()
+  const { getTransaction, updateTransaction, error, clearError } = useTransactions()
   
   const [formData, setFormData] = useState({
     title: '',

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTransactions } from '../hooks/useTransactions'
-import { formatCurrency, formatDate, getCategoryLabel, getCategoryColor } from '../utils/formatters'
+import { formatCurrency, getCategoryLabel } from '../utils/formatters'
 import { 
   Plus, 
   Edit, 
