@@ -51,4 +51,4 @@ transactionSchema.virtual('type').get(function() {
 // Ensure virtual fields are serialized
 transactionSchema.set('toJSON', { virtuals: true });
 
-module.exports = mongoose.model('Transaction', transactionSchema);
+export default mongoose.model('Transaction', transactionSchema);

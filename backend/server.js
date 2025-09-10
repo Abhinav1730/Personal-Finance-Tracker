@@ -3,13 +3,13 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
 
-const transactionRoutes = import('./routes/transactions');
+import transactionRoutes from './routes/transactions.js';
 
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI
-const NODE_ENV = process.env.NODE_ENV
+const MONGODB_URI = process.env.MONGODB_URI;
+const NODE_ENV = process.env.NODE_ENV;
 
 app.use(cors({
   origin: NODE_ENV === 'production' 

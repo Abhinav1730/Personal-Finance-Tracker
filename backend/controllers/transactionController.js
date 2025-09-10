@@ -307,7 +307,7 @@ const getTransactionStats = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getTransactions,
   getTransaction,
   createTransaction,

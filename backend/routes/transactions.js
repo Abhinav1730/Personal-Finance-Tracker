@@ -1,14 +1,14 @@
 import express from 'express';
 const router = express.Router();
-const {
+import {
   getTransactions,
   getTransaction,
   createTransaction,
   updateTransaction,
   deleteTransaction,
   getTransactionStats
-} = require('../controllers/transactionController');
-const { transactionValidation, updateTransactionValidation } = require('../middleware/validation');
+} from '../controllers/transactionController.js';
+import { transactionValidation, updateTransactionValidation } from '../middleware/validation.js';
 
 router.get('/', getTransactions);
 
@@ -22,4 +22,4 @@ router.put('/:id', updateTransactionValidation, updateTransaction);
 
 router.delete('/:id', deleteTransaction);
 
-module.exports = router;
+export default router;

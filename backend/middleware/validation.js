@@ -89,7 +89,7 @@ const updateTransactionValidation = [
     .withMessage('Description cannot exceed 500 characters')
 ];
 
-module.exports = {
+export {
   transactionValidation,
   updateTransactionValidation
 };
