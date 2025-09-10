@@ -8,8 +8,8 @@ const transactionRoutes = import('./routes/transactions');
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/personal-finance-tracker';
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const MONGODB_URI = process.env.MONGODB_URI
+const NODE_ENV = process.env.NODE_ENV
 
 app.use(cors({
   origin: NODE_ENV === 'production' 
