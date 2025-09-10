@@ -14,6 +14,7 @@ const EditTransaction = () => {
   const [formData, setFormData] = useState({
     title: '',
     amount: '',
+    type: 'expense', // 'income' or 'expense'
     date: '',
     category: 'expense',
     description: ''
@@ -33,6 +34,7 @@ const EditTransaction = () => {
         setFormData({
           title: transaction.title,
           amount: Math.abs(transaction.amount).toString(),
+          type: transaction.amount > 0 ? 'income' : 'expense',
           date: new Date(transaction.date).toISOString().split('T')[0],
           category: transaction.category,
           description: transaction.description || ''
@@ -64,6 +66,15 @@ const EditTransaction = () => {
         [name]: ''
       }))
     }
+  }
+
+  const handleTypeChange = (type) => {
+    setFormData(prev => ({
+      ...prev,
+      type,
+      // Set default category based on type if current category doesn't match
+      category: type === 'income' ? 'salary' : 'food'
+    }))
   }
 
   const validateForm = () => {
@@ -102,7 +113,9 @@ const EditTransaction = () => {
     try {
       const transactionData = {
         ...formData,
-        amount: parseFloat(formData.amount)
+        amount: formData.type === 'expense' 
+          ? -Math.abs(parseFloat(formData.amount)) 
+          : Math.abs(parseFloat(formData.amount))
       }
       
       await updateTransaction(id, transactionData)
@@ -164,6 +177,46 @@ const EditTransaction = () => {
             )}
           </div>
 
+          {/* Transaction Type */}
+          <div>
+            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
+              <Tag className="h-4 w-4" />
+              <span>Transaction Type *</span>
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => handleTypeChange('income')}
+                className={`p-4 rounded-xl border-2 transition-all duration-300 ${
+                  formData.type === 'income'
+                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-lg'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-emerald-300 hover:bg-emerald-25'
+                }`}
+              >
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                  <span className="font-semibold">Income</span>
+                </div>
+                <p className="text-xs mt-1 opacity-75">Money coming in</p>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTypeChange('expense')}
+                className={`p-4 rounded-xl border-2 transition-all duration-300 ${
+                  formData.type === 'expense'
+                    ? 'border-red-500 bg-red-50 text-red-700 shadow-lg'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-red-300 hover:bg-red-25'
+                }`}
+              >
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <span className="font-semibold">Expense</span>
+                </div>
+                <p className="text-xs mt-1 opacity-75">Money going out</p>
+              </button>
+            </div>
+          </div>
+
           {/* Amount */}
           <div>
             <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
@@ -186,7 +239,7 @@ const EditTransaction = () => {
               />
             </div>
             <p className="mt-1 text-xs text-gray-500">
-              Use positive numbers for income, negative for expenses
+              Enter the amount (always positive). The type above determines if it's income or expense.
             </p>
             {validationErrors.amount && (
               <p className="mt-1 text-sm text-danger-600">{validationErrors.amount}</p>
@@ -224,11 +277,13 @@ const EditTransaction = () => {
               onChange={handleInputChange}
               className={`input ${validationErrors.category ? 'input-error' : ''}`}
             >
-              {CATEGORIES.map((category) => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              ))}
+              {CATEGORIES
+                .filter(category => category.type === formData.type)
+                .map((category) => (
+                  <option key={category.value} value={category.value}>
+                    {category.label}
+                  </option>
+                ))}
             </select>
             {validationErrors.category && (
               <p className="mt-1 text-sm text-danger-600">{validationErrors.category}</p>

@@ -24,16 +24,24 @@ export const formatDateTime = (date) => {
 }
 
 export const CATEGORIES = [
-  { value: 'income', label: 'Income', color: 'success' },
-  { value: 'expense', label: 'Expense', color: 'danger' },
-  { value: 'food', label: 'Food', color: 'primary' },
-  { value: 'transportation', label: 'Transportation', color: 'primary' },
-  { value: 'entertainment', label: 'Entertainment', color: 'primary' },
-  { value: 'shopping', label: 'Shopping', color: 'primary' },
-  { value: 'bills', label: 'Bills', color: 'primary' },
-  { value: 'healthcare', label: 'Healthcare', color: 'primary' },
-  { value: 'education', label: 'Education', color: 'primary' },
-  { value: 'other', label: 'Other', color: 'primary' },
+  // Income categories
+  { value: 'salary', label: 'Salary', color: 'success', type: 'income' },
+  { value: 'freelance', label: 'Freelance', color: 'success', type: 'income' },
+  { value: 'investment', label: 'Investment', color: 'success', type: 'income' },
+  { value: 'business', label: 'Business', color: 'success', type: 'income' },
+  { value: 'gift', label: 'Gift', color: 'success', type: 'income' },
+  { value: 'other_income', label: 'Other Income', color: 'success', type: 'income' },
+  
+  // Expense categories
+  { value: 'food', label: 'Food & Dining', color: 'danger', type: 'expense' },
+  { value: 'transportation', label: 'Transportation', color: 'danger', type: 'expense' },
+  { value: 'entertainment', label: 'Entertainment', color: 'danger', type: 'expense' },
+  { value: 'shopping', label: 'Shopping', color: 'danger', type: 'expense' },
+  { value: 'bills', label: 'Bills & Utilities', color: 'danger', type: 'expense' },
+  { value: 'healthcare', label: 'Healthcare', color: 'danger', type: 'expense' },
+  { value: 'education', label: 'Education', color: 'danger', type: 'expense' },
+  { value: 'rent', label: 'Rent & Housing', color: 'danger', type: 'expense' },
+  { value: 'other_expense', label: 'Other Expense', color: 'danger', type: 'expense' },
 ]
 
 export const getCategoryLabel = (value) => {
