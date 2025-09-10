@@ -1,6 +1,5 @@
-const { body } = require('express-validator');
+import { body } from 'express-validator';
 
-// Transaction validation rules
 const transactionValidation = [
   body('title')
     .trim()
@@ -45,7 +44,6 @@ const transactionValidation = [
     .withMessage('Description cannot exceed 500 characters')
 ];
 
-// Update transaction validation (all fields optional except ID)
 const updateTransactionValidation = [
   body('title')
     .optional()
