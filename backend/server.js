@@ -18,8 +18,8 @@ app.use(cors({
   origin: NODE_ENV === 'production' 
     ? [
       "https://personal-finance-tracker-pi-three.vercel.app",
-      "https://personal-finance-tracker-pi-three-git-main.vercel.app", 
-      "https://personal-finance-tracker-pi-three-git-develop.vercel.app",
+      "personal-finance-tracker-git-main-abhinav-saxenas-projects.vercel.app", 
+      "personal-finance-tracker-38tlehx2w-abhinav-saxenas-projects.vercel.app",
       /^https:\/\/personal-finance-tracker-pi-three.*\.vercel\.app$/,
       /^https:\/\/.*\.vercel\.app$/ // Allow all Vercel domains
       ]
