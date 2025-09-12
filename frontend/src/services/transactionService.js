@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD 
-  ? 'https://personal-finance-tracker-1-xvzu.onrender.com/api' // Your actual Render backend URL
+  ? 'https://personal-finance-tracker-2-hhb9.onrender.com/api' // Your actual Render backend URL
   : '/api')
 
 // Debug: Log the API URL being used
