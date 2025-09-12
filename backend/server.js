@@ -16,7 +16,9 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 app.use(cors({
   origin: NODE_ENV === 'production' 
-    ? ['https://your-frontend-domain.com'] // Replace with your frontend domain
+    ? [
+      "https://personal-finance-tracker-pi-three.vercel.app/"
+      ]
     : ['http://localhost:3000', 'http://127.0.0.1:3000'],
   credentials: true
 }));

@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD 
+    ? 'https://personal-finance-tracker-backend.onrender.com/api' // Replace with your actual Render backend URL
+    : '/api'),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -27,6 +29,15 @@ api.interceptors.response.use(
 )
 
 export const transactionService = {
+  async healthCheck() {
+    try {
+      const response = await api.get('/health')
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  },
+
   async getTransactions(filters = {}) {
     const params = new URLSearchParams()
     
