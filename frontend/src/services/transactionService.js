@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD 
-  ? 'https://personal-finance-tracker-2-hhb9.onrender.com/api'
+  ? 'https://personal-finance-tracker-3-81s9.onrender.com/api'
   : '/api')
 
 const api = axios.create({
