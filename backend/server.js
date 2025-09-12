@@ -17,7 +17,10 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 app.use(cors({
   origin: NODE_ENV === 'production' 
     ? [
-      "https://personal-finance-tracker-pi-three.vercel.app"
+      "https://personal-finance-tracker-pi-three.vercel.app",
+      "https://personal-finance-tracker-pi-three-git-main.vercel.app",
+      "https://personal-finance-tracker-pi-three-git-develop.vercel.app",
+      /^https:\/\/personal-finance-tracker-pi-three.*\.vercel\.app$/ // Allow all Vercel preview domains
       ]
     : ['http://localhost:3000', 'http://127.0.0.1:3000'],
   credentials: true

@@ -1,13 +1,8 @@
 import axios from 'axios'
 
 const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD 
-  ? 'https://personal-finance-tracker-2-hhb9.onrender.com/api' // Your actual Render backend URL
+  ? 'https://personal-finance-tracker-2-hhb9.onrender.com/api'
   : '/api')
-
-// Debug: Log the API URL being used
-console.log('API Base URL:', baseURL)
-console.log('Environment:', import.meta.env.MODE)
-console.log('Is Production:', import.meta.env.PROD)
 
 const api = axios.create({
   baseURL,
@@ -31,16 +26,6 @@ api.interceptors.response.use(
     return response
   },
   (error) => {
-    // Enhanced error logging for debugging
-    console.error('API Error Details:', {
-      message: error.message,
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      data: error.response?.data,
-      url: error.config?.url,
-      baseURL: error.config?.baseURL,
-      fullURL: error.config?.baseURL + error.config?.url
-    })
     return Promise.reject(error)
   }
 )
