@@ -9,7 +9,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': {
-        target: 'https://personal-finance-tracker-3-81s9.onrender.com', 
+        target: 'https://personal-finance-tracker-4-kluy.onrender.com', 
         changeOrigin: true,
         secure: true,
       }

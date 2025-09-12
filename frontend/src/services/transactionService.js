@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://personal-finance-tracker-3-81s9.onrender.com/api' : '/api'),
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://personal-finance-tracker-4-kluy.onrender.com/api' : '/api'),
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 })
