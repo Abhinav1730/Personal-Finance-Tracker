@@ -17,7 +17,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 app.use(cors({
   origin: NODE_ENV === 'production' 
     ? [
-      "https://personal-finance-tracker-pi-three.vercel.app/"
+      "https://personal-finance-tracker-pi-three.vercel.app"
       ]
     : ['http://localhost:3000', 'http://127.0.0.1:3000'],
   credentials: true
@@ -37,7 +37,17 @@ app.get('/api/health', (req, res) => {
     success: true,
     message: 'Personal Finance Tracker API is running',
     timestamp: new Date().toISOString(),
-    environment: NODE_ENV
+    environment: NODE_ENV,
+    cors: 'CORS is working'
+  });
+});
+
+// Simple test endpoint
+app.get('/api/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Test endpoint working',
+    timestamp: new Date().toISOString()
   });
 });
 

@@ -1,9 +1,16 @@
 import axios from 'axios'
 
+const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD 
+  ? 'https://personal-finance-tracker-1-xvzu.onrender.com/api' // Your actual Render backend URL
+  : '/api')
+
+// Debug: Log the API URL being used
+console.log('API Base URL:', baseURL)
+console.log('Environment:', import.meta.env.MODE)
+console.log('Is Production:', import.meta.env.PROD)
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD 
-    ? 'https://personal-finance-tracker-backend.onrender.com/api' // Replace with your actual Render backend URL
-    : '/api'),
+  baseURL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -24,6 +31,16 @@ api.interceptors.response.use(
     return response
   },
   (error) => {
+    // Enhanced error logging for debugging
+    console.error('API Error Details:', {
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      url: error.config?.url,
+      baseURL: error.config?.baseURL,
+      fullURL: error.config?.baseURL + error.config?.url
+    })
     return Promise.reject(error)
   }
 )
