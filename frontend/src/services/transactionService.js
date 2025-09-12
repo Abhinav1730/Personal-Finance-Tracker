@@ -1,34 +1,13 @@
 import axios from 'axios'
 
-const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD 
-  ? 'https://personal-finance-tracker-3-81s9.onrender.com/api'
-  : '/api')
-
 const api = axios.create({
-  baseURL,
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://personal-finance-tracker-3-81s9.onrender.com/api' : '/api'),
   timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
 })
 
-api.interceptors.request.use(
-  (config) => {
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
-
-api.interceptors.response.use(
-  (response) => {
-    return response
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
+api.interceptors.request.use(config => config, error => Promise.reject(error))
+api.interceptors.response.use(response => response, error => Promise.reject(error))
 
 export const transactionService = {
   async healthCheck() {

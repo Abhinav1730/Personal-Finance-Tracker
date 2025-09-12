@@ -18,16 +18,28 @@ app.use(cors({
   origin: NODE_ENV === 'production' 
     ? [
       "https://personal-finance-tracker-pi-three.vercel.app",
-      "https://personal-finance-tracker-pi-three-git-main.vercel.app",
+      "https://personal-finance-tracker-pi-three-git-main.vercel.app", 
       "https://personal-finance-tracker-pi-three-git-develop.vercel.app",
-      /^https:\/\/personal-finance-tracker-pi-three.*\.vercel\.app$/ // Allow all Vercel preview domains
+      /^https:\/\/personal-finance-tracker-pi-three.*\.vercel\.app$/,
+      /^https:\/\/.*\.vercel\.app$/ // Allow all Vercel domains
       ]
     : ['http://localhost:3000', 'http://127.0.0.1:3000'],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Handle preflight requests
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
 
 app.use((req, res, next) => {
   next();
