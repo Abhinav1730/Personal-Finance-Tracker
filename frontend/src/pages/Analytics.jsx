@@ -52,7 +52,7 @@ const Analytics = () => {
       const response = await getStats(filters)
       setStats(response.data)
     } catch (error) {
-      console.error('Failed to load statistics:', error)
+      // Error handled by context
     } finally {
       setIsLoading(false)
     }

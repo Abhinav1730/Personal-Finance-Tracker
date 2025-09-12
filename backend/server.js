@@ -25,7 +25,6 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
 
@@ -62,8 +61,6 @@ app.use('*', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error('Global error handler:', err);
-  
   if (err.name === 'ValidationError') {
     const errors = Object.values(err.errors).map(error => ({
       field: error.path,
@@ -107,10 +104,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-    console.log(`Database: ${conn.connection.name}`);
   } catch (error) {
-    console.error('MongoDB connection error:', error);
     process.exit(1);
   }
 };
@@ -120,51 +114,29 @@ const startServer = async () => {
     await connectDB();
     
     app.listen(PORT, () => {
-      console.log(`\n🚀 Server running on port ${PORT}`);
-      console.log(`📊 Environment: ${NODE_ENV}`);
-      console.log(`🌐 API URL: http://localhost:${PORT}`);
-      console.log(`📋 Health check: http://localhost:${PORT}/api/health`);
-      console.log(`\n📝 Available endpoints:`);
-      console.log(`   GET    /api/transactions - Get all transactions`);
-      console.log(`   GET    /api/transactions/:id - Get single transaction`);
-      console.log(`   POST   /api/transactions - Create transaction`);
-      console.log(`   PUT    /api/transactions/:id - Update transaction`);
-      console.log(`   DELETE /api/transactions/:id - Delete transaction`);
-      console.log(`   GET    /api/transactions/stats/summary - Get statistics`);
-      console.log(`\n💡 Example API calls:`);
-      console.log(`   curl http://localhost:${PORT}/api/transactions`);
-      console.log(`   curl -X POST http://localhost:${PORT}/api/transactions \\`);
-      console.log(`        -H "Content-Type: application/json" \\`);
-      console.log(`        -d '{"title":"Salary","amount":5000,"category":"income"}'`);
+      // Server started successfully
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
     process.exit(1);
   }
 };
 
 process.on('unhandledRejection', (err, promise) => {
-  console.error('Unhandled Promise Rejection:', err);
   process.exit(1);
 });
 
 process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
   process.exit(1);
 });
 
 process.on('SIGTERM', () => {
-  console.log('SIGTERM received. Shutting down gracefully...');
   mongoose.connection.close(() => {
-    console.log('MongoDB connection closed.');
     process.exit(0);
   });
 });
 
 process.on('SIGINT', () => {
-  console.log('SIGINT received. Shutting down gracefully...');
   mongoose.connection.close(() => {
-    console.log('MongoDB connection closed.');
     process.exit(0);
   });
 });

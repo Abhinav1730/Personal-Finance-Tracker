@@ -40,7 +40,6 @@ const EditTransaction = () => {
           description: transaction.description || ''
         })
       } catch (error) {
-        console.error('Failed to load transaction:', error)
         navigate('/')
       } finally {
         setIsLoading(false)
@@ -121,7 +120,7 @@ const EditTransaction = () => {
       await updateTransaction(id, transactionData)
       navigate('/')
     } catch (error) {
-      console.error('Failed to update transaction:', error)
+      // Error handled by context
     } finally {
       setIsSubmitting(false)
     }

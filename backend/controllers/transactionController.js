@@ -47,7 +47,6 @@ const getTransactions = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error fetching transactions:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while fetching transactions',
@@ -72,8 +71,6 @@ const getTransaction = async (req, res) => {
       data: transaction
     });
   } catch (error) {
-    console.error('Error fetching transaction:', error);
-    
     if (error.name === 'CastError') {
       return res.status(400).json({
         success: false,
@@ -119,8 +116,6 @@ const createTransaction = async (req, res) => {
       data: savedTransaction
     });
   } catch (error) {
-    console.error('Error creating transaction:', error);
-    
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => ({
         field: err.path,
@@ -186,8 +181,6 @@ const updateTransaction = async (req, res) => {
       data: transaction
     });
   } catch (error) {
-    console.error('Error updating transaction:', error);
-    
     if (error.name === 'CastError') {
       return res.status(400).json({
         success: false,
@@ -233,8 +226,6 @@ const deleteTransaction = async (req, res) => {
       data: transaction
     });
   } catch (error) {
-    console.error('Error deleting transaction:', error);
-    
     if (error.name === 'CastError') {
       return res.status(400).json({
         success: false,
@@ -298,7 +289,6 @@ const getTransactionStats = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error fetching transaction stats:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while fetching statistics',

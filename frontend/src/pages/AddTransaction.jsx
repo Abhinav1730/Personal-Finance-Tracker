@@ -91,7 +91,7 @@ const AddTransaction = () => {
       await addTransaction(transactionData)
       navigate('/')
     } catch (error) {
-      console.error('Failed to create transaction:', error)
+      // Error handled by context
     } finally {
       setIsSubmitting(false)
     }

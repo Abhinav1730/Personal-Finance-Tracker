@@ -56,7 +56,7 @@ const Home = () => {
         setShowDeleteModal(false)
         setTransactionToDelete(null)
       } catch (error) {
-        console.error('Failed to delete transaction:', error)
+        // Error handled by context
       }
     }
   }
